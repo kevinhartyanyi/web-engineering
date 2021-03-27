@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Solutions extends Model
 {
     use HasFactory;
-    protected $fillable = ["submit"];
+    protected $fillable = ["submit", "tasks_id"];
+
+    public function tasks()
+    {
+        return $this->belongsTo(Tasks::class);
+    }
 }

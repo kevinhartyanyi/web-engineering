@@ -18,7 +18,10 @@ class CreateTasksTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('point');
+
+            $table->unsignedBigInteger('subjects_id');
             $table->timestamps();
+            $table->foreign('subjects_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }
 

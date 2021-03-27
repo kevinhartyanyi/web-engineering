@@ -9,5 +9,15 @@ class Tasks extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["name", "description", "point"];
+    protected $fillable = ["name", "description", "point", "subjects_id"];
+
+    public function solutions()
+    {
+        return $this->hasMany(Solutions::class);
+    }
+
+    public function subjects()
+    {
+        return $this->belongsTo(Subjects::class);
+    }
 }

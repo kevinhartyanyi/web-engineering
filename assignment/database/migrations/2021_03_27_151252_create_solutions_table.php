@@ -16,7 +16,10 @@ class CreateSolutionsTable extends Migration
         Schema::create('solutions', function (Blueprint $table) {
             $table->id();
             $table->date("submit");
+
+            $table->unsignedBigInteger('tasks_id');
             $table->timestamps();
+            $table->foreign('tasks_id')->references('id')->on('tasks')->onDelete('cascade');
         });
     }
 
