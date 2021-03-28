@@ -19,7 +19,21 @@ class CreateSubjectsTable extends Migration
             $table->string('description')->nullable();
             $table->string('subject_code');
             $table->integer('credit');
+
+            $table->unsignedBigInteger('teacher_id');
             $table->timestamps();
+            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        Schema::create('subject_student', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('subject_id');
+            $table->unsignedBigInteger('user_id');
+            $table->timestamps();
+
+            $table->unique(['subject_id', 'user_id']);
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -31,5 +45,6 @@ class CreateSubjectsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('subjects');
+        Schema::dropIfExists('subject_student');
     }
 }

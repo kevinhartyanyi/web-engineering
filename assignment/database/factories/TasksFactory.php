@@ -27,7 +27,7 @@ class TasksFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->generateTaskName($this->faker->unique()->safeColorName),
+            'name' => $this->generateTaskName($this->faker->unique()->hexColor),
             'description' => $this->faker->sentence(),
             'point' => $this->faker->numberBetween(1,100),
         ];

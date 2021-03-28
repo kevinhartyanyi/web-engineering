@@ -15,4 +15,14 @@ class Subjects extends Model
     {
         return $this->hasMany(Tasks::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'subject_student', 'subject_id', 'user_id');
+    }
 }

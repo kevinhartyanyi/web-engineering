@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Solutions;
 use App\Models\Tasks;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -19,9 +20,12 @@ class SolutionsSeeder extends Seeder
         DB::table('solutions')->truncate();
 
         $tasks = Tasks::all();
+        $students = User::all();
 
-        $tasks->each(function ($task) {
-            Solutions::factory(3)->for($task)->create();
+        $tasks->each(function ($task) use($students) {
+            $students->each(function ($student) use($task) {
+                Solutions::factory(1)->for($task)->for($student)->create();
+            });
         });
 
         // Solutions::factory(5)->create();

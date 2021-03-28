@@ -14,4 +14,9 @@ class Solutions extends Model
     {
         return $this->belongsTo(Tasks::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
