@@ -1,6 +1,9 @@
-@extends('layouts.base')
-
-@section('content')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Main') }}
+        </h2>
+    </x-slot>
     <div class="jumbotron"  style="margin-top: 30px;">
       <h1 class="display-4">LMS</h1>
       <h3 class="lead">A learning management system.</h3>
@@ -26,5 +29,5 @@
               </div>
         </div>
     </div>
-@endsection
+</x-app-layout>
 

@@ -1,6 +1,9 @@
-@extends('layouts.base')
-
-@section('content')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Contact') }}
+        </h2>
+    </x-slot>
 <div class="card border-primary mb-3" style="margin-top: 30px;" >
     <div class="card-header">Author</div>
     <div class="card-body">
@@ -19,5 +22,5 @@
       <h4 class="card-title">C0S0RJ</h4>
     </div>
   </div>
-@endsection
+</x-app-layout>
 
