@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/united/bootstrap.min.css">
 
-    <title>Music project</title>
+    <title>LMS</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -31,12 +31,12 @@
           @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline" style="color: green;">Dashboard</a>
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline" style="color: white;">Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline" style="color: green;">Log in</a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline" style="color: white;">Log in</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline" style="color: green;">Register</a>
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline" style="color: white;">Register</a>
                         @endif
                     @endauth
                 </div>

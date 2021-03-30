@@ -20,24 +20,42 @@ class UserSeeder extends Seeder
         DB::table('users')->truncate();
 
         User::create([
-            'name' => "Teacher Jim",
-            'email' => "email@email.com",
+            'name' => "Prof. Lawson Mraz III",
+            'email' => "teacher1@email.com",
             'email_verified_at' => now(),
-            'password' => Hash::make('abc123'), // password
+            'password' => Hash::make('abc123456'), // password
             'remember_token' => Str::random(10),
             'teacher' => true,
         ]);
 
         User::create([
-            'name' => "Student Leo",
-            'email' => "student@email.com",
+            'name' => "Dr. Antonette Berge MD",
+            'email' => "teacher2@email.com",
             'email_verified_at' => now(),
-            'password' => Hash::make('abc123'), // password
+            'password' => Hash::make('abc123456'), // password
+            'remember_token' => Str::random(10),
+            'teacher' => true,
+        ]);
+
+        User::create([
+            'name' => "Adelia Jones",
+            'email' => "student1@email.com",
+            'email_verified_at' => now(),
+            'password' => Hash::make('abc123456'), // password
             'remember_token' => Str::random(10),
             'teacher' => false,
         ]);
 
-        User::factory(4)->create();
+        User::create([
+            'name' => "Ben Johnson",
+            'email' => "student2@email.com",
+            'email_verified_at' => now(),
+            'password' => Hash::make('abc123456'), // password
+            'remember_token' => Str::random(10),
+            'teacher' => false,
+        ]);
+
+        //User::factory(4)->create();
 
         // User::create([
         // 'name' => 'Jon Doe',

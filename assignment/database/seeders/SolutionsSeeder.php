@@ -20,7 +20,7 @@ class SolutionsSeeder extends Seeder
         DB::table('solutions')->truncate();
 
         $tasks = Tasks::all();
-        $students = User::all();
+        $students = User::where('teacher', false);
 
         $tasks->each(function ($task) use($students) {
             $students->each(function ($student) use($task) {
