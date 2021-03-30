@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SubjectsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,13 @@ Route::get('/', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::get('subjects', [SubjectsController::class, 'subjects'])->middleware(['auth'])->name('subjects');
+
+
+// Route::get('/subjects', function () {
+//     return view('subjects');
+// })->middleware(['auth'])->name('subjects');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
