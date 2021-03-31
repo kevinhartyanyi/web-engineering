@@ -28,9 +28,13 @@ class SubjectsSeeder extends Seeder
         //print($students);
 
         $teachers->each(function ($teacher) use($students) {
-            Subjects::factory(2)->for($teacher)->create()->each(function ($subjects) use($students) {
-                $subjects->students()->attach($students);
-            });
+            if ($teacher->id != 1) {
+                Subjects::factory(2)->for($teacher)->create()->each(function ($subjects) use($students) {
+                    $subjects->students()->attach($students);
+                });
+            } else{
+                Subjects::factory(2)->for($teacher)->create();
+            }
         });
 
         // $teachers->each(function ($teacher) {

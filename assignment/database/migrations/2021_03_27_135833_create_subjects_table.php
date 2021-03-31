@@ -20,6 +20,8 @@ class CreateSubjectsTable extends Migration
             $table->string('subject_code');
             $table->integer('credit');
 
+            $table->softDeletes();
+
             $table->unsignedBigInteger('teacher_id');
             $table->timestamps();
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');

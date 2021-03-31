@@ -22,7 +22,13 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
+Route::resource('subjects', SubjectsController::class)->middleware(['auth']);
+
 Route::get('subjects', [SubjectsController::class, 'subjects'])->middleware(['auth'])->name('subjects');
+
+Route::get('take', [SubjectsController::class, 'take'])->middleware(['auth'])->name('take');
+
+Route::post('take_subject/{id}', [SubjectsController::class, 'take_subject'])->middleware(['auth'])->name('take_subject');
 
 
 // Route::get('/subjects', function () {

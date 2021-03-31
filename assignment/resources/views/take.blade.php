@@ -7,11 +7,6 @@
     <div class="overflow-x-auto">
         <div class="min-w-screen min-h-screen bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
             <div class="w-full lg:w-5/6">
-                @if (!Auth::user()->teacher)
-                    <div class="inline-block mr-2 mt-2">
-                        <a href="/take" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-purple-500 hover:bg-purple-600 hover:shadow-lg">Take a new Subject</a>
-                    </div>
-                @endif
                 <div class="bg-white shadow-md rounded my-6">
                     <table class="min-w-max w-full table-auto">
                         <thead>
@@ -62,14 +57,10 @@
                                             </svg>
                                         </div>
                                         <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <form action="{{ route('subjects.destroy', [ 'subject' => $subject->id ]) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('take_subject', [ 'id' => $subject->id ]) }}" method="POST" class="d-inline">
                                                 @csrf
-                                                @method('DELETE')
-                                                @if (Auth::user()->teacher)
-                                                    <button type="submit" class="btn btn-warning">Delete</button>
-                                                @else
-                                                    <button type="submit" class="btn btn-info">Leave</button>
-                                                @endif
+                                                @method('POST')
+                                                <button type="submit" class="btn btn-info">Take Subject</button>
                                               </form>
                                         </div>
                                     </div>
