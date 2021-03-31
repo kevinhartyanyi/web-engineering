@@ -24,7 +24,9 @@ class SolutionsSeeder extends Seeder
 
         $tasks->each(function ($task) use($students) {
             $students->each(function ($student) use($task) {
-                Solutions::factory(1)->for($task)->for($student)->create();
+                if ($student->id == 3) {
+                    Solutions::factory(1)->for($task)->for($student)->create();
+                }
             });
         });
 

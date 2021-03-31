@@ -38,7 +38,11 @@
                                 @endif
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <span class="font-medium">{{$subject->name}}</span>
+                                        @if (Auth::user()->teacher)
+                                            <span class="font-medium">{{$subject->name}}</span>
+                                        @else
+                                            <a href={{ route('subject_details', [ 'id' => $subject->id ]) }} class="font-medium">{{$subject->name}}</a>
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 text-left">

@@ -30,6 +30,9 @@ Route::get('take', [SubjectsController::class, 'take'])->middleware(['auth'])->n
 
 Route::post('take_subject/{id}', [SubjectsController::class, 'take_subject'])->middleware(['auth'])->name('take_subject');
 
+Route::get('subject_details/{id}', [SubjectsController::class, 'subject_details'])->middleware(['auth'])->name('subject_details');
+
+Route::get('submit_solution/{id}', [SubjectsController::class, 'submit_solution'])->middleware(['auth'])->name('submit_solution');
 
 // Route::get('/subjects', function () {
 //     return view('subjects');

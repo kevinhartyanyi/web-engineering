@@ -91,6 +91,68 @@ class SubjectsController extends Controller
         return redirect()->route('subjects');
     }
 
+    public function subject_details($id)
+    {
+        // subject name, description, code, credits, created at and last modification date, number of assigned students, teacher name and email address.
+        // list of students' names and email addresses who have taken this subject
+        $subject = DB::table('subjects')
+            ->join('users', 'teacher_id', '=', 'users.id')
+            ->where('subjects.deleted_at', null)
+            ->where('subjects.id', $id)
+            ->select('subjects.*', 'users.name as teacher', 'users.email as email')
+            ->get()
+            ->first();
+        $students = DB::table('subjects')
+            ->join('subject_student', 'subjects.id', '=', 'subject_student.subject_id')
+            ->join('users', 'subject_student.user_id', '=', 'users.id')
+            ->where('subjects.deleted_at', null)
+            ->where('subjects.id', $id)
+            ->select('users.name as student', 'users.email as email')
+            ->get();
+
+
+        $tasks = DB::table('tasks')
+            ->where('subjects_id', $id)
+            ->select('tasks.id as id', 'tasks.name as name', 'tasks.point as point')
+            ->get();
+
+        $user_id = Auth::user()->id;
+
+        $student_solutions = DB::table('tasks')
+            ->join('solutions', 'solutions.tasks_id', '=', 'tasks.id')
+            ->join('users', 'users.id', '=', 'solutions.user_id')
+            ->where('users.id', $user_id)
+            ->where('subjects_id', $id)
+            ->select('tasks.name as name')
+            ->get()
+            ->pluck('name');
+
+        return view('/subject_details', [
+            'subject' => $subject,
+            'students' => $students,
+            'tasks' => $tasks,
+            'student_solutions' => $student_solutions,
+        ]);
+    }
+
+    public function submit_solution($id)
+    {
+        // $subject = Subjects::where('id', $id)->get()->first();
+        // $subject->students()->attach(Auth::user());
+        // return redirect()->route('subjects');
+        $task = DB::table('tasks')
+            ->join('subjects', 'subjects.id', '=', 'tasks.subjects_id')
+            ->join('users', 'subjects.teacher_id', '=', 'users.id')
+            ->where('tasks.id', $id)
+            ->select('subjects.name as subject', 'tasks.description as description', 'tasks.point as point', 'users.name as teacher')
+            ->get()
+            ->first();
+
+        return view('/submit_solution', [
+            'task' => $task,
+        ]);
+    }
+
     public function destroy(Subjects $subject)
     {
         if (Auth::user()->teacher) {
