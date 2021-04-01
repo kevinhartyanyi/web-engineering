@@ -10,7 +10,7 @@ class Subjects extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ["name", "description", "subject_code", "credit"];
+    protected $fillable = ["name", "description", "subject_code", "credit", "teacher_id"];
 
     public function tasks()
     {

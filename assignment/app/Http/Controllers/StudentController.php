@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Subjects;
+use App\Models\Solutions;
+use App\Models\Tasks;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\SolutionFormRequest;
+use Facade\IgnitionContracts\Solution;
 use Illuminate\Http\Request;
 
-class SubjectsController extends Controller
+class StudentController extends Controller
 {
     public function subjects()
     {
@@ -144,7 +148,7 @@ class SubjectsController extends Controller
             ->join('subjects', 'subjects.id', '=', 'tasks.subjects_id')
             ->join('users', 'subjects.teacher_id', '=', 'users.id')
             ->where('tasks.id', $id)
-            ->select('subjects.name as subject', 'tasks.description as description', 'tasks.point as point', 'users.name as teacher')
+            ->select('tasks.id as id','subjects.name as subject', 'tasks.description as description', 'tasks.point as point', 'users.name as teacher')
             ->get()
             ->first();
 
@@ -153,8 +157,34 @@ class SubjectsController extends Controller
         ]);
     }
 
-    public function destroy(Subjects $subject)
+    public function save_solution(SolutionFormRequest $request, int $task_id )
     {
+        $validated_data = $request->validated();
+        $user_id = Auth::user()->id;
+        Solutions::create([
+            'answer' => $validated_data['solution'],
+            'submit' => date("Y-m-d"),
+            'user_id' => $user_id,
+            'tasks_id' => $task_id,
+            'evaluated' => false,
+            ]);
+
+        return redirect()->route('subjects');
+    }
+
+    public function create_subject()
+    {
+        return view('/create_subject');
+    }
+
+    public function save_subject()
+    {
+        //return view('/create_subject');
+    }
+
+    public function subject_remove(int $subject_id)
+    {
+        $subject = Subjects::where('id', $subject_id)->get()->first();
         if (Auth::user()->teacher) {
             $subject->delete();
         } else {

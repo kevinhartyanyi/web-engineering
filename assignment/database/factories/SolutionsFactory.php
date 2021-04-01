@@ -23,6 +23,8 @@ class SolutionsFactory extends Factory
     {
         return [
             'submit' => $this->faker->date(),
+            'answer' => $this->faker->text(),
+            'evaluated' => $this->faker->boolean(),
         ];
     }
 }

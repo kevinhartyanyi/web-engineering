@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\SubjectsController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TasksController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,17 +24,28 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-Route::resource('subjects', SubjectsController::class)->middleware(['auth']);
+//Route::resource('subjects', StudentController::class)->middleware(['auth']);
+Route::resource('subjects', TeacherController::class)->middleware(['auth']);
+Route::resource('tasks', TasksController::class)->middleware(['auth']);
 
-Route::get('subjects', [SubjectsController::class, 'subjects'])->middleware(['auth'])->name('subjects');
+Route::post('save_task/{id}', [TasksController::class, 'save_task'])->middleware(['auth'])->name('save_task');
+Route::get('create_task/{id}', [TasksController::class, 'create_task'])->middleware(['auth'])->name('create_task');
 
-Route::get('take', [SubjectsController::class, 'take'])->middleware(['auth'])->name('take');
+Route::get('subjects', [StudentController::class, 'subjects'])->middleware(['auth'])->name('subjects');
 
-Route::post('take_subject/{id}', [SubjectsController::class, 'take_subject'])->middleware(['auth'])->name('take_subject');
+Route::get('take', [StudentController::class, 'take'])->middleware(['auth'])->name('take');
 
-Route::get('subject_details/{id}', [SubjectsController::class, 'subject_details'])->middleware(['auth'])->name('subject_details');
+Route::post('take_subject/{id}', [StudentController::class, 'take_subject'])->middleware(['auth'])->name('take_subject');
 
-Route::get('submit_solution/{id}', [SubjectsController::class, 'submit_solution'])->middleware(['auth'])->name('submit_solution');
+Route::get('subject_details/{id}', [StudentController::class, 'subject_details'])->middleware(['auth'])->name('subject_details');
+
+Route::get('submit_solution/{id}', [StudentController::class, 'submit_solution'])->middleware(['auth'])->name('submit_solution');
+
+Route::post('save_solution/{id}', [StudentController::class, 'save_solution'])->middleware(['auth'])->name('save_solution');
+
+Route::post('subject_remove/{id}', [StudentController::class, 'subject_remove'])->middleware(['auth'])->name('subject_remove');
+
+Route::get('subjects.create', [StudentController::class, 'create_subject'])->middleware(['auth'])->name('create_subject');
 
 // Route::get('/subjects', function () {
 //     return view('subjects');

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Solutions extends Model
 {
     use HasFactory;
-    protected $fillable = ["submit", "tasks_id"];
+    protected $fillable = ["submit", "tasks_id", "answer", "user_id", "evaluated"];
 
     public function tasks()
     {

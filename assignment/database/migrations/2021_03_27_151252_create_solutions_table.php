@@ -16,6 +16,8 @@ class CreateSolutionsTable extends Migration
         Schema::create('solutions', function (Blueprint $table) {
             $table->id();
             $table->date("submit");
+            $table->string("answer");
+            $table->boolean("evaluated");
             $table->timestamps();
 
             $table->unsignedBigInteger('tasks_id');
