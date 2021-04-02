@@ -45,10 +45,63 @@
                                 </td>
                                 <td class="py-3 px-6 text-left">
                                     <div class="flex items-center">
-                                        <span>{{$solutions->where('evaluated', true)->count()}}</span>
+                                        <span>{{$solutions->where('evaluation_date', '!=', null)->count()}}</span>
                                     </div>
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-bottom: 50px; margin-top: 50px;  margin-left: 20px"><h1>Solutions</h1></div>
+                    <table class="min-w-max w-full table-auto">
+                        <thead>
+                            <tr class="bg-green-200 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">Submitted</th>
+                                <th class="py-3 px-6 text-left">Student</th>
+                                <th class="py-3 px-6 text-left">Email</th>
+                                <th class="py-3 px-6 text-left">Evaluation Date</th>
+                                <th class="py-3 px-6 text-left">Earned Points</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+                            @foreach ($solutions as $solution)
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <span>{{$solution->submit}}</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left">
+                                    <div class="flex items-center">
+                                        <span>{{$solution->name}}</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left">
+                                    <div class="flex items-center">
+                                        <span>{{$solution->email}}</span>
+                                    </div>
+                                </td>
+                                @if ($solution->evaluation_point != null)
+                                <td class="py-3 px-6 text-left">
+                                    <div class="flex items-center">
+                                        <span>{{$solution->evaluation_date}}</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left">
+                                    <div class="flex items-center">
+                                        <span>{{$solution->evaluation_point}}</span>
+                                    </div>
+                                </td>
+                                @else
+                                <td class="py-3 px-6 text-left">
+                                    <div class="flex items-center">
+                                        <div class="inline-block mr-2 mt-2">
+                                            <a href="{{ route('task_solution', [ 'id' => $solution->id ]) }}" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg">Evaluate Task</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                @endif
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

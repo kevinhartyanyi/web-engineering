@@ -30,6 +30,8 @@ Route::resource('tasks', TasksController::class)->middleware(['auth']);
 
 Route::post('save_task/{id}', [TasksController::class, 'save_task'])->middleware(['auth'])->name('save_task');
 Route::get('create_task/{id}', [TasksController::class, 'create_task'])->middleware(['auth'])->name('create_task');
+Route::get('task_solution/{id}', [TasksController::class, 'task_solution'])->middleware(['auth'])->name('task_solution');
+Route::post('evaluate_solution/{id}', [TasksController::class, 'evaluate_solution'])->middleware(['auth'])->name('evaluate_solution');
 
 Route::get('subjects', [StudentController::class, 'subjects'])->middleware(['auth'])->name('subjects');
 

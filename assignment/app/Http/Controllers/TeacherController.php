@@ -26,6 +26,10 @@ class TeacherController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
         return view('subjects.create');
     }
 
@@ -37,6 +41,10 @@ class TeacherController extends Controller
      */
     public function store(SubjectFormRequest $request)
     {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
         $validated_data = $request->validated();
         $user_id = Auth::user()->id;
 
@@ -70,6 +78,10 @@ class TeacherController extends Controller
      */
     public function edit(Subjects $subject)
     {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
         return view('subjects.edit', [
             'subject' => $subject
         ]);
@@ -84,6 +96,10 @@ class TeacherController extends Controller
      */
     public function update(SubjectFormRequest $request, Subjects $subject)
     {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
         $validated_data = $request->validated();
         $subject->update($validated_data);
 

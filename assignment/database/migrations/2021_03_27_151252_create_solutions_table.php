@@ -17,7 +17,8 @@ class CreateSolutionsTable extends Migration
             $table->id();
             $table->date("submit");
             $table->string("answer");
-            $table->boolean("evaluated");
+            $table->boolean("evaluation_date")->nullable();
+            $table->boolean("evaluation_point")->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('tasks_id');

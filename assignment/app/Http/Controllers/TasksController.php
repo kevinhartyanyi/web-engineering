@@ -8,6 +8,7 @@ use App\Models\Subjects;
 use App\Models\Solutions;
 use App\Models\Tasks;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
 {
@@ -35,6 +36,9 @@ class TasksController extends Controller
 
     public function create_task(int $subject_id)
     {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
         return view('tasks.create', [
             'subject_id' => $subject_id,
         ]);
@@ -58,6 +62,10 @@ class TasksController extends Controller
 
     public function save_task(TaskFormRequest $request, int $subject_id )
     {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
         $validated_data = $request->validated();
 
         Tasks::create([
@@ -77,12 +85,61 @@ class TasksController extends Controller
      */
     public function show(Tasks $task)
     {
-        $solutions = Solutions::where('tasks_id', $task->id)->get();
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
+        $solutions = Solutions::where('tasks_id', $task->id)
+            ->join('users', 'users.id', 'solutions.user_id')
+            ->get();
 
         return view('tasks.show', [
             'task' => $task,
             'solutions' => $solutions,
         ]);
+    }
+
+    public function task_solution(int $solution_id)
+    {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
+        $solution = DB::table('solutions')
+            ->join('tasks', 'tasks.id', 'solutions.tasks_id')
+            ->where('solutions.id', $solution_id)
+            ->get()
+            ->first();
+
+        return view('tasks.solution', [
+            'solution' => $solution,
+        ]);
+    }
+
+    public function evaluate_solution(Request $request, int $solution_id)
+    {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
+        $solution = DB::table('solutions')
+            ->join('tasks', 'tasks.id', 'solutions.tasks_id')
+            ->where('solutions.id', $solution_id)
+            ->get()
+            ->first();
+
+
+        $validated = $request->validate([
+            'point' => "required|numeric|min:0|max:{$solution->point}",
+        ]);
+
+        $solution_update = Solutions::find($solution_id);
+        $solution_update->fill([
+            'evaluation_point' => $validated['point'],
+            'evaluation_date' =>  date("Y-m-d"),
+            ])->save();
+
+        return redirect()->route('tasks.show', [ 'task' => $solution->tasks_id ]);
     }
 
     /**
@@ -93,6 +150,10 @@ class TasksController extends Controller
      */
     public function edit(Tasks $task)
     {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
         return view('tasks.edit', [
             'task' => $task
         ]);
@@ -107,6 +168,10 @@ class TasksController extends Controller
      */
     public function update(TaskFormRequest $request, Tasks $task)
     {
+        if(!Auth::user()->teacher){
+            return abort(404);
+        }
+
         $validated_data = $request->validated();
         $task->update($validated_data);
 

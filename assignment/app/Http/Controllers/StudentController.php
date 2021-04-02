@@ -44,6 +44,10 @@ class StudentController extends Controller
 
     public function take()
     {
+        if(Auth::user()->teacher){
+            return abort(404);
+        }
+
         $user_id = Auth::user()->id;
         $student_subjects = DB::table('subjects')
         ->join('subject_student', 'subjects.id', '=', 'subject_student.subject_id')
@@ -90,6 +94,10 @@ class StudentController extends Controller
 
     public function take_subject($id)
     {
+        if(Auth::user()->teacher){
+            return abort(404);
+        }
+
         $subject = Subjects::where('id', $id)->get()->first();
         $subject->students()->attach(Auth::user());
         return redirect()->route('subjects');
@@ -141,9 +149,10 @@ class StudentController extends Controller
 
     public function submit_solution($id)
     {
-        // $subject = Subjects::where('id', $id)->get()->first();
-        // $subject->students()->attach(Auth::user());
-        // return redirect()->route('subjects');
+        if(Auth::user()->teacher){
+            return abort(404);
+        }
+
         $task = DB::table('tasks')
             ->join('subjects', 'subjects.id', '=', 'tasks.subjects_id')
             ->join('users', 'subjects.teacher_id', '=', 'users.id')
@@ -159,6 +168,10 @@ class StudentController extends Controller
 
     public function save_solution(SolutionFormRequest $request, int $task_id )
     {
+        if(Auth::user()->teacher){
+            return abort(404);
+        }
+
         $validated_data = $request->validated();
         $user_id = Auth::user()->id;
         Solutions::create([
@@ -166,7 +179,6 @@ class StudentController extends Controller
             'submit' => date("Y-m-d"),
             'user_id' => $user_id,
             'tasks_id' => $task_id,
-            'evaluated' => false,
             ]);
 
         return redirect()->route('subjects');
