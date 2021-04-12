@@ -17,18 +17,32 @@
                         {{ __('Main') }}
                     </x-nav-link>
                 </div>
+
+                @auth
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('subjects')" :active="request()->routeIs('subjects')">
+                        {{ __('My Subjects') }}
+                    </x-nav-link>
+                </div>
+                @if (Auth::user()->teacher)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('subjects.create')" :active="request()->routeIs('subjects.create')">
+                            {{ __('New Subject') }}
+                        </x-nav-link>
+                    </div>
+                @else
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="'/take'" :active="request()->routeIs('/take')">
+                        {{ __('Take a Subject') }}
+                    </x-nav-link>
+                </div>
+                @endif
+                @endauth
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
                         {{ __('Contact') }}
                     </x-nav-link>
                 </div>
-                @auth
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('subjects')" :active="request()->routeIs('subjects')">
-                        {{ __('Subjects') }}
-                    </x-nav-link>
-                </div>
-                @endauth
             </div>
 
             <!-- Settings Dropdown -->
