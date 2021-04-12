@@ -108,9 +108,11 @@
                         </tbody>
                     </table>
                     <div style="margin-bottom: 50px; margin-top: 50px;  margin-left: 20px"><h1>Tasks</h1></div>
-                    <div class="inline-block mr-2 mt-2" style="margin-bottom: 20px">
-                        <a href="{{ route('create_task', [ 'id' => $subject->id ]) }}" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg">Create Task</a>
-                    </div>
+                    @if (Auth::user()->teacher)
+                        <div class="inline-block mr-2 mt-2" style="margin-bottom: 20px">
+                            <a href="{{ route('create_task', [ 'id' => $subject->id ]) }}" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500 hover:bg-green-600 hover:shadow-lg">Create Task</a>
+                        </div>
+                    @endif
                     <table class="min-w-max w-full table-auto">
                         <thead>
                             <tr class="bg-green-200 text-gray-600 uppercase text-sm leading-normal">
