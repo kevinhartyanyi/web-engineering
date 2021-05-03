@@ -1,0 +1,28 @@
+<div class="container">
+
+  <form (ngSubmit)="onSubmit()" #diaryForm="ngForm">
+    <div class="form-group">
+      <label for="title">Post Title</label>
+      <input type="text" class="form-control" id="title" required [(ngModel)]="model.title" name="title" #title="ngModel">
+      <div [hidden]="title.valid || title.pristine"
+          class="alert alert-danger">
+        Title is required
+      </div>
+      TODO: remove this: {{model.title}}
+    </div>
+    <div class="form-group">
+      <label for="content">Post Content</label>
+      <textarea class="form-control" id="content" rows="3" required [(ngModel)]="model.content" name="content" #content="ngModel"></textarea>
+      <div [hidden]="content.valid || content.pristine"
+          class="alert alert-danger">
+        Content is required
+      </div>
+      TODO: remove this: {{model.content}}
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-success" [disabled]="!diaryForm.form.valid">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
