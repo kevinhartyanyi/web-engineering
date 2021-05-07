@@ -1,8 +1,8 @@
 export class Diary {
 
-  constructor(
-    public title: string,
-    public content: string,
-  ) {  }
-
+  id: number;
+  title: string = "";
+  content: string = "";
+  author: string = "";
+  created_at: string = "";
 }

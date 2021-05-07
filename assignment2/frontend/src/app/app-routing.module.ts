@@ -5,6 +5,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { AboutComponent } from './about/about.component';
 import { DiaryListComponent } from './diary-list/diary-list.component';
 import { AddDiaryComponent } from './add-diary/add-diary.component';
+import { DiaryPageComponent } from './diary-page/diary-page.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,15 @@ const routes: Routes = [
     component: DiaryListComponent,
   },
   {
-    path: "add-diary",
+    path: "diary/new",
+    component: AddDiaryComponent,
+  },
+  {
+    path: "diary/:id",
+    component: DiaryPageComponent,
+  },
+  {
+    path: "diary/:id/edit",
     component: AddDiaryComponent,
   },
 ];

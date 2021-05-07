@@ -14,7 +14,7 @@ class DiaryController extends Controller
      */
     public function index()
     {
-        return Diary::all();
+        return Diary::orderByDesc('created_at')->get();
     }
 
     /**
@@ -35,7 +35,12 @@ class DiaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'author' => '',
+        ]);
+        return Diary::create($data);
     }
 
     /**
@@ -44,9 +49,9 @@ class DiaryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Diary $diary)
     {
-        //
+        return $diary;
     }
 
     /**
@@ -67,9 +72,10 @@ class DiaryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Diary $diary)
     {
-        //
+        $diary->update($request->all());
+        return $diary;
     }
 
     /**
